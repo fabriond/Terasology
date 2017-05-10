@@ -41,7 +41,7 @@ import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.common.DisplayNameComponent;
 import org.terasology.logic.health.DestroyEvent;
 import org.terasology.logic.health.DoDestroyEvent;
-import org.terasology.logic.health.EngineDamageTypes;
+import org.terasology.logic.health.PrefabFactory;
 import org.terasology.logic.inventory.ItemComponent;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.math.geom.Vector3f;
@@ -170,12 +170,12 @@ public class CharacterSystem extends BaseComponentSystem implements UpdateSubscr
 
     @ReceiveEvent(priority = EventPriority.PRIORITY_TRIVIAL, netFilter = RegisterMode.AUTHORITY)
     public void onAttackBlock(AttackEvent event, EntityRef entityRef, BlockComponent blockComponent) {
-        entityRef.send(new DestroyEvent(event.getInstigator(), event.getDirectCause(), EngineDamageTypes.PHYSICAL.get()));
+        entityRef.send(new DestroyEvent(event.getInstigator(), event.getDirectCause(), PrefabFactory.get("physical")));
     }
 
     @ReceiveEvent(priority = EventPriority.PRIORITY_TRIVIAL, netFilter = RegisterMode.AUTHORITY)
     public void onAttackBlock(AttackEvent event, EntityRef entityRef, ActAsBlockComponent actAsBlockComponent) {
-        entityRef.send(new DestroyEvent(event.getInstigator(), event.getDirectCause(), EngineDamageTypes.PHYSICAL.get()));
+        entityRef.send(new DestroyEvent(event.getInstigator(), event.getDirectCause(), PrefabFactory.get("physical")));
     }
 
     @ReceiveEvent(components = {CharacterComponent.class, LocationComponent.class}, netFilter = RegisterMode.AUTHORITY)
