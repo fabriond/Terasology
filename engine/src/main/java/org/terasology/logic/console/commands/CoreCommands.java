@@ -58,6 +58,7 @@ import org.terasology.network.NetworkMode;
 import org.terasology.network.NetworkSystem;
 import org.terasology.network.PingService;
 import org.terasology.network.Server;
+import org.terasology.network.joinState.Failed;
 import org.terasology.persistence.WorldDumper;
 import org.terasology.persistence.serializers.PrefabSerializer;
 import org.terasology.registry.In;
@@ -417,7 +418,7 @@ public class CoreCommands extends BaseComponentSystem {
         final WaitPopup<JoinStatus> popup = nuiManager.pushScreen(WaitPopup.ASSET_URI, WaitPopup.class);
         popup.setMessage("Join Game", "Connecting to '" + address + ":" + port + "' - please wait ...");
         popup.onSuccess(result -> {
-            if (result.getStatus() != JoinStatus.Status.FAILED) {
+            if (!(result.getStatus() instanceof Failed)) {
                 gameEngine.changeState(new StateLoading(result));
             } else {
                 MessagePopup screen = nuiManager.pushScreen(MessagePopup.ASSET_URI, MessagePopup.class);

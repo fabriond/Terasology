@@ -35,6 +35,8 @@ import org.terasology.network.JoinStatus;
 import org.terasology.network.NetworkSystem;
 import org.terasology.network.Server;
 import org.terasology.network.ServerInfoMessage;
+import org.terasology.network.joinState.Completed;
+import org.terasology.network.joinState.Failed;
 import org.terasology.world.internal.WorldInfo;
 
 import java.util.Map;
@@ -80,7 +82,7 @@ public class JoinServer implements LoadProcess {
                 return true;
             }
             return false;
-        } else if (joinStatus.getStatus() == JoinStatus.Status.COMPLETE) {
+        } else if (joinStatus.getStatus() instanceof Completed) {
             Server server = networkSystem.getServer();
             ServerInfoMessage serverInfo = networkSystem.getServer().getInfo();
 
@@ -144,7 +146,7 @@ public class JoinServer implements LoadProcess {
             applyModuleThread.start();
 
             return false;
-        } else if (joinStatus.getStatus() == JoinStatus.Status.FAILED) {
+        } else if (joinStatus.getStatus() instanceof Failed) {
             StateMainMenu mainMenu = new StateMainMenu("Failed to connect to server: " + joinStatus.getErrorMessage());
             context.get(GameEngine.class).changeState(mainMenu);
             networkSystem.shutdown();

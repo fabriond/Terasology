@@ -16,27 +16,28 @@
 package org.terasology.network.internal;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import org.terasology.network.joinState.Status;
+import org.terasology.network.joinState.StatusManager;
 import org.terasology.network.JoinStatus;
+
 
 /**
  */
 public class JoinStatusImpl implements JoinStatus {
-    private Status status = Status.IN_PROGRESS;
+    private StatusManager status = new StatusManager();
     private String currentActivity = "";
     private AtomicDouble currentProgress = new AtomicDouble(0);
-    private String errorMessage = "";
 
     public JoinStatusImpl() {
     }
 
     public JoinStatusImpl(String errorMessage) {
-        this.errorMessage = errorMessage;
-        status = Status.FAILED;
+        status.setStatus(errorMessage);
     }
 
     @Override
     public synchronized Status getStatus() {
-        return status;
+        return status.getStatus();
     }
 
     @Override
@@ -60,15 +61,14 @@ public class JoinStatusImpl implements JoinStatus {
 
     @Override
     public synchronized String getErrorMessage() {
-        return errorMessage;
+        return status.getStatus().getMessage();
     }
 
     public synchronized void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-        status = Status.FAILED;
+        status.setStatus(errorMessage);
     }
 
     public synchronized void setComplete() {
-        status = Status.COMPLETE;
+        status.setStatus("");
     }
 }

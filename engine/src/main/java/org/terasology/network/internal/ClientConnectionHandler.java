@@ -32,6 +32,8 @@ import org.terasology.module.ModuleLoader;
 import org.terasology.naming.Name;
 import org.terasology.naming.Version;
 import org.terasology.network.JoinStatus;
+import org.terasology.network.joinState.Completed;
+import org.terasology.network.joinState.Failed;
 import org.terasology.protobuf.NetData;
 import org.terasology.registry.CoreRegistry;
 
@@ -77,8 +79,8 @@ public class ClientConnectionHandler extends SimpleChannelUpstreamHandler {
             public void run() {
                 synchronized (joinStatus) {
                     if (System.currentTimeMillis() > timeoutPoint
-                            && joinStatus.getStatus() != JoinStatus.Status.COMPLETE
-                            && joinStatus.getStatus() != JoinStatus.Status.FAILED) {
+                            && !(joinStatus.getStatus() instanceof Completed)
+                            && !(joinStatus.getStatus() instanceof Failed)) {
                         joinStatus.setErrorMessage("Server stopped responding.");
                         channel.close();
                         logger.error("Server timeout threshold of {} ms exceeded.", timeoutThreshold);
@@ -91,7 +93,7 @@ public class ClientConnectionHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
         // If we timed out, don't handle anymore messages.
-        if (joinStatus.getStatus() == JoinStatus.Status.FAILED) {
+        if (joinStatus.getStatus() instanceof Failed) {
             return;
         }
         scheduleTimeout(ctx.getChannel());

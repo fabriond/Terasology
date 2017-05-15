@@ -37,6 +37,7 @@ import org.terasology.network.NetworkSystem;
 import org.terasology.network.PingService;
 import org.terasology.network.ServerInfoMessage;
 import org.terasology.network.ServerInfoService;
+import org.terasology.network.joinState.Failed;
 import org.terasology.registry.In;
 import org.terasology.rendering.FontColor;
 import org.terasology.rendering.nui.Color;
@@ -203,7 +204,7 @@ public class JoinGameScreen extends CoreScreenLayer {
                         + "' - "
                         + translationSystem.translate("${engine:menu#please-wait}"));
         popup.onSuccess(result -> {
-            if (result.getStatus() != JoinStatus.Status.FAILED) {
+            if (!(result.getStatus() instanceof Failed)) {
                 engine.changeState(new StateLoading(result));
             } else {
                 MessagePopup screen = getManager().pushScreen(MessagePopup.ASSET_URI, MessagePopup.class);

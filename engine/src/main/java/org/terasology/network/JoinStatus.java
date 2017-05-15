@@ -15,15 +15,11 @@
  */
 package org.terasology.network;
 
+import org.terasology.network.joinState.Status;
+
 /**
  */
 public interface JoinStatus {
-
-    enum Status {
-        IN_PROGRESS,
-        COMPLETE,
-        FAILED
-    }
 
     Status getStatus();
 
