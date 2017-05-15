@@ -17,7 +17,7 @@ package org.terasology.logic.actions;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.prefab.Prefab;
-import org.terasology.logic.health.EngineDamageTypes;
+import org.terasology.logic.health.PrefabFactory;
 
 /**
  */
@@ -44,7 +44,7 @@ public class TunnelActionComponent implements Component {
 
     public int damageAmount = 1000;
 
-    public Prefab damageType = EngineDamageTypes.EXPLOSIVE.get();
+    public Prefab damageType = PrefabFactory.get("explosive");
 
     /**
      * The amount of block positions that should be skipped from selection

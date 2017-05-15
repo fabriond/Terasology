@@ -17,7 +17,7 @@ package org.terasology.logic.actions;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.prefab.Prefab;
-import org.terasology.logic.health.EngineDamageTypes;
+import org.terasology.logic.health.PrefabFactory;
 
 public class ArrowActionComponent implements Component {
 
@@ -36,6 +36,6 @@ public class ArrowActionComponent implements Component {
      */
     public float arrowsPerSecond = 1.0f;
 
-    public Prefab damageType = EngineDamageTypes.PHYSICAL.get();
+    public Prefab damageType = PrefabFactory.get("physical");
 
 }

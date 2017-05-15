@@ -39,7 +39,7 @@ public class HealthCommands extends BaseComponentSystem {
         ClientComponent clientComp = client.getComponent(ClientComponent.class);
         HealthComponent health = clientComp.character.getComponent(HealthComponent.class);
         if (health != null) {
-            clientComp.character.send(new DestroyEvent(clientComp.character, EntityRef.NULL, EngineDamageTypes.DIRECT.get()));
+            clientComp.character.send(new DestroyEvent(clientComp.character, EntityRef.NULL, PrefabFactory.get("direct")));
         }
     }
 
@@ -47,7 +47,7 @@ public class HealthCommands extends BaseComponentSystem {
             requiredPermission = PermissionManager.CHEAT_PERMISSION)
     public String damage(@Sender EntityRef client, @CommandParam("amount") int amount) {
         ClientComponent clientComp = client.getComponent(ClientComponent.class);
-        clientComp.character.send(new DoDamageEvent(amount, EngineDamageTypes.DIRECT.get(), clientComp.character));
+        clientComp.character.send(new DoDamageEvent(amount, PrefabFactory.get("direct"), clientComp.character));
 
         return "Inflicted damage of " + amount;
     }

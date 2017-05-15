@@ -30,7 +30,7 @@ public class DoDamageEvent implements Event {
     private EntityRef directCause;
 
     public DoDamageEvent(int amount) {
-        this(amount, EngineDamageTypes.DIRECT.get());
+        this(amount, PrefabFactory.get("direct"));
     }
 
     public DoDamageEvent(int amount, Prefab damageType) {

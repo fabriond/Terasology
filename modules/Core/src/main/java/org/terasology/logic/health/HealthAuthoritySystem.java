@@ -103,7 +103,7 @@ public class HealthAuthoritySystem extends BaseComponentSystem implements Update
 
     static void damageEntity(AttackEvent event, EntityRef targetEntity) {
         int damage = 1;
-        Prefab damageType = EngineDamageTypes.PHYSICAL.get();
+        Prefab damageType = PrefabFactory.get("physical");
         // Calculate damage from item
         ItemComponent item = event.getDirectCause().getComponent(ItemComponent.class);
         if (item != null) {
@@ -141,7 +141,7 @@ public class HealthAuthoritySystem extends BaseComponentSystem implements Update
             if (modifiedAmount > 0) {
                 doHeal(entity, modifiedAmount, instigator);
             } else if (modifiedAmount < 0) {
-                doDamage(entity, -modifiedAmount, EngineDamageTypes.HEALING.get(), instigator, EntityRef.NULL);
+                doDamage(entity, -modifiedAmount, PrefabFactory.get("healing"), instigator, EntityRef.NULL);
             }
         }
     }
@@ -230,7 +230,7 @@ public class HealthAuthoritySystem extends BaseComponentSystem implements Update
         if (speed > health.fallingDamageSpeedThreshold) {
             int damage = (int) ((speed - health.fallingDamageSpeedThreshold) * health.excessSpeedDamageMultiplier);
             if (damage > 0) {
-                checkDamage(entity, damage, EngineDamageTypes.PHYSICAL.get(), EntityRef.NULL, EntityRef.NULL);
+                checkDamage(entity, damage, PrefabFactory.get("physical"), EntityRef.NULL, EntityRef.NULL);
             }
         }
     }
@@ -246,7 +246,7 @@ public class HealthAuthoritySystem extends BaseComponentSystem implements Update
         if (speed > health.horizontalDamageSpeedThreshold) {
             int damage = (int) ((speed - health.horizontalDamageSpeedThreshold) * health.excessSpeedDamageMultiplier);
             if (damage > 0) {
-                checkDamage(entity, damage, EngineDamageTypes.PHYSICAL.get(), EntityRef.NULL, EntityRef.NULL);
+                checkDamage(entity, damage, PrefabFactory.get("physical"), EntityRef.NULL, EntityRef.NULL);
             }
         }
     }
